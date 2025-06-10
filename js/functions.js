@@ -1,8 +1,8 @@
 function isValidLength(inputString, maxLength) {
   return inputString.length <= maxLength;
 }
-console.log(isValidLength('JarvisVerse', 12));
-console.log(isValidLength('Hello, world!', 5));
+isValidLength('JarvisVerse', 12);
+isValidLength('Hello, world!', 5);
 
 function isPalindrome(str) {
 const normalizedStr = str.replaceAll(' ', '').toLowerCase();
@@ -15,9 +15,9 @@ return normalizedStr === reversedStr;
 }
 
 
-console.log(isPalindrome('Marvel')); // false
-console.log(isPalindrome('Лёша на полке клопа нашёл')); // true
-console.log(isPalindrome('JarvisVerse')); // false
+isPalindrome('Marvel'); // false
+isPalindrome('Лёша на полке клопа нашёл'); // true
+isPalindrome('JarvisVerse'); // false
 
 
 
@@ -44,8 +44,8 @@ function extractNumber(str) {
 }
 
 
-console.log(extractNumber('2023 год'));
-console.log(extractNumber('ECMAScript 2022'));
-console.log(extractNumber('1 кефир, 0.5 батона'));
-console.log(extractNumber('агент 007'));
-console.log(extractNumber('а я томат'));
+extractNumber('2023 год');
+extractNumber('ECMAScript 2022');
+extractNumber('1 кефир, 0.5 батона');
+extractNumber('агент 007');
+extractNumber('а я томат');

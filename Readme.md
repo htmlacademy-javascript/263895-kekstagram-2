@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Антон Оленин](https://up.htmlacademy.ru/javascript-individual/2/user/263895).
-* Наставник: `Неизвестно`.
+* Наставник: [Павел Ившин](https://htmlacademy.ru/profile/id818775).
 
 ---
 
