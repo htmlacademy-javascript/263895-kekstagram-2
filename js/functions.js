@@ -1,51 +1,22 @@
-function isValidLength(inputString, maxLength) {
-  return inputString.length <= maxLength;
-}
-isValidLength('JarvisVerse', 12);
-isValidLength('Hello, world!', 5);
-
-function isPalindrome(str) {
-const normalizedStr = str.replaceAll(' ', '').toLowerCase();
-let reversedStr = '';
-
-for (let i = normalizedStr.length - 1; i >= 0; i--) {
-    reversedStr += normalizedStr[i];
-  }
-return normalizedStr === reversedStr;
-}
-
-
-isPalindrome('Marvel'); // false
-isPalindrome('Лёша на полке клопа нашёл'); // true
-isPalindrome('JarvisVerse'); // false
-
-
-
-function extractNumber(str) {
-  str = str.toString();
-  let result = '';
-
-
-  for (let i = 0; i < str.length; i++) {
-    const digit = parseInt(str[i], 10);
-
-
-    if (!Number.isNaN(digit)) {
-      result += digit;
-    }
+// Проверка, укладывается ли встреча в рабочее время
+function isMeetingInWorkTime(startWork, endWork, startMeeting, duration) {
+  // Перевод времени 'часы:минуты' в минуты с начала дня
+  function timeToMinutes(timeStr) {
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    return hours * 60 + minutes;
   }
 
+  const workStart = timeToMinutes(startWork);
+  const workEnd = timeToMinutes(endWork);
+  const meetingStart = timeToMinutes(startMeeting);
+  const meetingEnd = meetingStart + duration;
 
-  if (result === '') {
-    return NaN;
-  }
-
-  return parseInt(result, 10);
+  return meetingStart >= workStart && meetingEnd <= workEnd;
 }
 
-
-extractNumber('2023 год');
-extractNumber('ECMAScript 2022');
-extractNumber('1 кефир, 0.5 батона');
-extractNumber('агент 007');
-extractNumber('а я томат');
+// Примеры вызова функции для проверки
+console.log(isMeetingInWorkTime('08:00', '17:30', '14:00', 90)); // true
+console.log(isMeetingInWorkTime('8:0', '10:0', '8:0', 120));     // true
+console.log(isMeetingInWorkTime('08:00', '14:30', '14:00', 90)); // false
+console.log(isMeetingInWorkTime('14:00', '17:30', '08:0', 90));  // false
+console.log(isMeetingInWorkTime('8:00', '17:30', '08:00', 900)); // false
