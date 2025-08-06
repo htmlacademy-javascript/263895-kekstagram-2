@@ -1,5 +1,5 @@
-// main.js
 import { generatePhotos } from './data.js';
+import { renderThumbnails } from './render-thumbnails.js';
 
 const photos = generatePhotos(25);
-console.log(photos);
+renderThumbnails(photos);
