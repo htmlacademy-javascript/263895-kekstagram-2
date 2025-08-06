@@ -8,6 +8,7 @@ const DESCRIPTION_TEXTS = [
   'Прекрасное описание фотографии'
 ];
 
+// 👇 ВАЖНО: Должен быть именованный экспорт!
 export function generatePhotos(count) {
   const ids = getShuffledArray(count);
   const result = [];
