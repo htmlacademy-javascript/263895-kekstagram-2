@@ -1,15 +1,20 @@
 // render-thumbnails.js
-import { openBigPicture } from './big-picture.js'; // Импортируем функцию для открытия полноразмерного фото
+const picturesContainer = document.querySelector('.pictures');
+const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-const picturesContainer = document.querySelector('.pictures'); // Блок, куда вставляются миниатюры
-const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture'); // Шаблон миниатюры
+/**
+ * Отрисовка миниатюр
+ * @param {Array} photos - массив объектов с данными фотографий
+ * @param {Function} onThumbnailClick - колбэк для клика по миниатюре
+ */
+const renderThumbnails = (photos, onThumbnailClick) => {
+  // Очищаем контейнер от старых миниатюр (если перерисовка)
+  const oldPictures = picturesContainer.querySelectorAll('.picture');
+  oldPictures.forEach((pic) => pic.remove());
 
-// Функция отрисовки миниатюр
-const renderThumbnails = (photos) => {
   const fragment = document.createDocumentFragment();
 
   photos.forEach((photo) => {
-    // Клонируем шаблон
     const pictureElement = pictureTemplate.cloneNode(true);
 
     const imgEl = pictureElement.querySelector('.picture__img');
@@ -17,18 +22,14 @@ const renderThumbnails = (photos) => {
     imgEl.alt = photo.description;
 
     const likesEl = pictureElement.querySelector('.picture__likes');
-    if (likesEl) {
-      likesEl.textContent = String(photo.likes || 0);
-    }
+    likesEl.textContent = photo.likes;
 
     const commentsEl = pictureElement.querySelector('.picture__comments');
-    if (commentsEl) {
-      commentsEl.textContent = String(Array.isArray(photo.comments) ? photo.comments.length : 0);
-    }
+    commentsEl.textContent = photo.comments.length;
 
-    // Добавляем обработчик клика — открытие полноразмерного фото
+    // При клике на миниатюру открываем большое фото
     pictureElement.addEventListener('click', () => {
-      openBigPicture(photo);
+      onThumbnailClick(photo);
     });
 
     fragment.appendChild(pictureElement);
