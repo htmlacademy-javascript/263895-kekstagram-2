@@ -12,7 +12,6 @@ const renderThumbnails = (photos) => {
     // Клонируем шаблон
     const pictureElement = pictureTemplate.cloneNode(true);
 
-    // Заполняем данными
     const imgEl = pictureElement.querySelector('.picture__img');
     imgEl.src = photo.url;
     imgEl.alt = photo.description;

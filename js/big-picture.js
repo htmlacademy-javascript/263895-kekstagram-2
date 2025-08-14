@@ -1,14 +1,7 @@
 // big-picture.js
-// Модуль для открытия и закрытия полноразмерного изображения с данными
-
-// Находим элементы в DOM
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
 const likesCount = bigPicture.querySelector('.likes-count');
-const shownCommentsCount = bigPicture.querySelector('.social__comment-shown-count');
-const totalCommentsCount = bigPicture.querySelector('.social__comment-total-count');
-const commentsList = bigPicture.querySelector('.social__comments');
-const description = bigPicture.querySelector('.social__caption');
 const commentCountBlock = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
@@ -58,21 +51,6 @@ function renderComments(comments) {
 
 // Функция открытия полноразмерного фото
 function openBigPicture(photo) {
-  // Заполняем данные
-  bigPictureImage.src = photo.url;
-  likesCount.textContent = photo.likes;
-  shownCommentsCount.textContent = photo.comments.length; // Пока показываем все
-  totalCommentsCount.textContent = photo.comments.length;
-  description.textContent = photo.description;
-
-  // Рендерим комментарии
-  renderComments(photo.comments);
-
-  // Прячем лишние элементы (позже будут задания на них)
-  commentCountBlock.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
-
-  // Показываем окно
   bigPicture.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
@@ -83,5 +61,4 @@ function openBigPicture(photo) {
   }
 }
 
-// Экспортируем функцию
 export { openBigPicture };
