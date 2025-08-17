@@ -1,5 +1,8 @@
 // form.js
 
+import { resetScale } from './scale.js';
+import { resetEffects } from './effects.js';
+
 // Находим форму загрузки изображения
 const form = document.querySelector('.img-upload__form');
 
@@ -72,6 +75,9 @@ function closeForm() {
 
   form.reset(); // сброс всех полей
   pristine.reset(); // сброс сообщений об ошибках
+  resetScale(); // сброс масштаба
+  resetEffects(); // сброс фильтров
+
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
