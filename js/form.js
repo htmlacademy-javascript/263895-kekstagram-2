@@ -2,6 +2,7 @@
 
 import { resetScale } from './scale.js';
 import { resetEffects } from './effects.js';
+import { sendData } from './api.js'; // ✅ подключаем отправку на сервер
 
 // Находим форму загрузки изображения
 const form = document.querySelector('.img-upload__form');
@@ -32,39 +33,32 @@ const pristine = new Pristine(form, {
 function validateHashtags(value) {
   if (!value) {
     return true;
-  } // если пусто — ок
-
+  }
   const hashtags = value.trim().split(/\s+/);
-
   if (hashtags.length > MAX_HASHTAGS) {
     return false;
   }
-
   return hashtags.every((tag) => HASHTAG_REGEX.test(tag));
 }
 
 function getHashtagsErrorMessage() {
   return `Хэштегов должно быть не больше ${MAX_HASHTAGS}, каждый начинается с # и до 20 символов`;
 }
-
 pristine.addValidator(hashtagsInput, validateHashtags, getHashtagsErrorMessage);
 
 // ----------- ВАЛИДАЦИЯ КОММЕНТАРИЯ -----------
 function validateComment(value) {
   return value.length <= MAX_COMMENT_LENGTH;
 }
-
 function getCommentErrorMessage() {
   return `Комментарий не длиннее ${MAX_COMMENT_LENGTH} символов`;
 }
-
 pristine.addValidator(commentInput, validateComment, getCommentErrorMessage);
 
 // ----------- ОТКРЫТИЕ ФОРМЫ -----------
 fileInput.addEventListener('change', () => {
   overlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
-
   document.addEventListener('keydown', onDocumentKeydown);
 });
 
@@ -86,7 +80,11 @@ cancelButton.addEventListener('click', closeForm);
 
 // Закрытие по Escape (только если не в инпуте)
 function onDocumentKeydown(evt) {
-  if (evt.key === 'Escape' && !evt.target.closest('.text__hashtags') && !evt.target.closest('.text__description')) {
+  if (
+    evt.key === 'Escape' &&
+    !evt.target.closest('.text__hashtags') &&
+    !evt.target.closest('.text__description')
+  ) {
     evt.preventDefault();
     closeForm();
   }
@@ -97,11 +95,17 @@ form.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
   if (pristine.validate()) {
-    // eslint-disable-next-line no-console
-    console.log('Форма валидна, отправляем ✅');
-    form.submit();
-  } else {
-    // eslint-disable-next-line no-console
-    console.log('Форма содержит ошибки ❌');
+    const formData = new FormData(form);
+
+    sendData(formData) // ✅ отправляем данные на сервер
+      .then(() => {
+        // eslint-disable-next-line no-alert
+        alert('Фотография успешно опубликована ✅');
+        closeForm();
+      })
+      .catch(() => {
+        // eslint-disable-next-line no-alert
+        alert('Ошибка при отправке формы ❌ Попробуйте снова.');
+      });
   }
 });
