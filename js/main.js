@@ -4,11 +4,12 @@ import { getData } from './api.js';
 import { generatePhotos } from './data.js'; // оставляем как fallback
 import { initFilters } from './filters.js';
 import './form.js';
+import './upload-photo.js'; // 👉 добавили модуль загрузки фото
 
 getData()
   .then((photos) => {
     renderThumbnails(photos, openBigPicture);
-    initFilters(photos); // 👉 подключаем фильтры
+    initFilters(photos); // подключаем фильтры
   })
   .catch((err) => {
     // eslint-disable-next-line no-console
@@ -17,5 +18,5 @@ getData()
     // Показываем моковые фотки, если сервер недоступен
     const mockPhotos = generatePhotos(25);
     renderThumbnails(mockPhotos, openBigPicture);
-    initFilters(mockPhotos); // 👉 фильтры работают и с моковыми
+    initFilters(mockPhotos); // фильтры работают и с моковыми
   });
