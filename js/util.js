@@ -15,3 +15,17 @@ export function getShuffledArray(count) {
 
   return array;
 }
+
+/**
+ * Устранение дребезга
+ * @param {Function} callback - функция, которую нужно "дребезжить"
+ * @param {number} timeoutDelay - задержка в мс (по умолчанию 500)
+ * @returns {Function}
+ */
+export function debounce(callback, timeoutDelay = 500) {
+  let timeoutId;
+  return (...args) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, args), timeoutDelay);
+  };
+}
